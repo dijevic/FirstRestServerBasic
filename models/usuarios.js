@@ -39,7 +39,9 @@ const userSchema = new Schema({
 
 // con este metodo elimino de la vista del modelo el password
 userSchema.methods.toJSON = function(){
-    const {__v,password, ...usuario} = this.toObject();
+    const {__v,password,_id, ...usuario} = this.toObject();
+
+    usuario.uid = _id;
     return usuario
 }
 
