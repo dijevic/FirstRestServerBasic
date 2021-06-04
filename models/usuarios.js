@@ -12,7 +12,7 @@ const userSchema = new Schema({
         required : [true,'password es obligatorio']
 
     },
-    correo :{
+    correo:{
         type: 'string',
         required : [true,'email es obligatorio'],
         unique : true
@@ -23,7 +23,8 @@ const userSchema = new Schema({
     },
     rol:{
         type: 'string',
-        required : true
+        required : true,
+        default: 'USER_ROLE'
       
     },
     estado:{

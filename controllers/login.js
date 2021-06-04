@@ -2,11 +2,12 @@ const {response} = require('express');
 const bcrypt   = require('bcrypt')
 const Usuario  = require('../models/usuarios')
 const generaJWT = require('../helpers/generar_jwt')
+const googleVerify = require('../helpers/google-verify')
 
 
 
 
-const login = async(req, res = response)=>{
+const login = async(req, res = response)=>{      
 
     const {correo,password} = req.body
 
@@ -48,4 +49,60 @@ const login = async(req, res = response)=>{
 
 }
 
-module.exports = login;
+const googleSignIn = async(req= request, res = response, next)=>{
+
+    const {id_token} = req.body
+    
+    let userNew;
+    try{
+    const {correo,img,nombre} = await googleVerify(id_token)
+    let user = await Usuario.findOne({correo})
+    // if(!user.estado || user.estado == null || user.estado == undefined){
+    //     return res.status(400).json({msg:'erro'})
+    // }
+    if(!user){
+        try{
+
+            let data = {
+                nombre,
+                correo,
+                password:':p',
+                img,
+                google:true
+            }
+           
+            user = new Usuario(data)
+            const salt = bcrypt.genSaltSync(10);
+            user.password = bcrypt.hashSync(data.password, salt)
+            await user.save()
+
+        }catch(err){
+            return res.status(400).json({msg:err})
+        }
+      
+       
+    }
+    
+    if(!user.estado ){
+        return res.json({msg:`usuario bloqueado !!!`})
+    }
+     
+    const token =  await generaJWT(user.id)
+    res.json({
+        msg:`sign in`,
+        user
+    
+    })
+
+
+      
+    }catch(err){
+        return res.status(400).json({msg:`token de google invalido`,err})
+    }
+   
+}
+
+module.exports ={
+    login,
+    googleSignIn
+};
