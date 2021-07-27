@@ -32,7 +32,7 @@ const validarJwt = async(req = request, res  =response , next) => {
         console.log(err)
         res.status(401).json({message:`token no valido`})
     }
-   next()
+  
    
 
 }

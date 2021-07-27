@@ -7,8 +7,16 @@ class Server{
     constructor(){
        this.port = process.env.PORT 
         this.app = express();
-        this.usuariosPath = '/api/users';
-        this.pathAuth     = '/api/auth'
+
+        this.paths = {
+            Auth       : '/api/auth',
+            buscar     : '/api/buscar',
+            Categorias : '/api/categorias',
+            productos  : '/api/productos',
+            productos_categoria : '/api/productosxcategoria',
+            usuarios   : '/api/users' 
+        }
+
         this.conectDb()
         // middlewares
         this.middlewares()
@@ -26,8 +34,13 @@ class Server{
         this.app.use(express.json())
     }
     routes(){
-        this.app.use(this.pathAuth, require('../routes/auth'))
-        this.app.use(this.usuariosPath, require('../routes/user'))
+        this.app.use(this.paths.Auth, require('../routes/auth'))
+        this.app.use(this.paths.usuarios, require('../routes/user'))
+        this.app.use(this.paths.Categorias, require('../routes/categorias'))
+        this.app.use(this.paths.productos, require('../routes/productos'))
+        this.app.use(this.paths.productos_categoria , require('../routes/productos_categoria'))
+        this.app.use(this.paths.buscar , require('../routes/buscar'))
+
     }
     listen(){
         this.app.listen(this.port,()=>{

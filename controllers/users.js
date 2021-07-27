@@ -1,6 +1,9 @@
 const {response} = require('express')
 const Usuario  = require('../models/usuarios')
 const bcrypt   = require('bcrypt')
+
+
+
 const usuariosGet = async(req, res = response) =>{
   const {limite,desde} = req.query;
   const stateActived = {estado:true}
