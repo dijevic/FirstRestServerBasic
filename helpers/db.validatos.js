@@ -22,10 +22,18 @@ const existeUsuarioId = async(id)=>{
     if(!findUser){
        throw new Error(`el usuario con id  :'${id}' no esta registrado`)
     }
+    return true
 }
-  
+const validarColeccion = (coleccion , colecciones , next)=>{
+
+    if(!colecciones.includes(coleccion)){
+        return res.status(400).json({msg : ` la coleccion ${coleccion} no es una coleccion valida`})
+    }
+    return true
+}
 module.exports = {
     isValidRole,
     existeEmail,
-    existeUsuarioId
+    existeUsuarioId,
+    validarColeccion
 }

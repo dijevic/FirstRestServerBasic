@@ -1,0 +1,1 @@
+### este es el lugar donde se almacenan las imagenes y archivos TEMPORALMENTE

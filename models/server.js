@@ -1,6 +1,7 @@
 const express = require('express');
 const cors    = require('cors');
 const{ dbConection}= require('../DB/config')
+const fileUpload= require('express-fileupload')
 
 class Server{
 
@@ -14,7 +15,8 @@ class Server{
             Categorias : '/api/categorias',
             productos  : '/api/productos',
             productos_categoria : '/api/productosxcategoria',
-            usuarios   : '/api/users' 
+            usuarios   : '/api/users',
+            uploads    : '/api/uploads'
         }
 
         this.conectDb()
@@ -32,6 +34,14 @@ class Server{
         this.app.use(express.static('public'))
         // lectura y parseo de body
         this.app.use(express.json())
+        
+        // middleware para subida de archivos
+
+        this.app.use(fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/',
+            createParentPath : true
+        }));
     }
     routes(){
         this.app.use(this.paths.Auth, require('../routes/auth'))
@@ -40,11 +50,12 @@ class Server{
         this.app.use(this.paths.productos, require('../routes/productos'))
         this.app.use(this.paths.productos_categoria , require('../routes/productos_categoria'))
         this.app.use(this.paths.buscar , require('../routes/buscar'))
+        this.app.use(this.paths.uploads , require('../routes/uploads'))
 
     }
     listen(){
         this.app.listen(this.port,()=>{
-            console.log(`servisor corriendo en el puerto ${this.port}`)
+            console.log(`servidor corriendo en el puerto ${this.port}`)
         })
     }
 
