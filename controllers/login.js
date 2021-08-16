@@ -31,14 +31,14 @@ const login = async(req, res = response)=>{
 
     const token =  await generaJWT(user.id)
     try{
-        res.json({
+        res.status(200).json({
             rsp:'login ok !',
             user,
-            token
+            token,
+            status:200
         })
 
     }catch(err){
-        console.log(err)
         return res.json({
             msg:`algo salio mal`
         })
@@ -90,7 +90,8 @@ const googleSignIn = async(req= request, res = response, next)=>{
     const token =  await generaJWT(user.id)
     res.json({
         msg:`sign in`,
-        user
+        user,
+        token
     
     })
 
@@ -102,7 +103,21 @@ const googleSignIn = async(req= request, res = response, next)=>{
    
 }
 
+const renovarToken = async (req= request, res = response,)=>{
+
+    const {usuario} = req
+    const token =  await generaJWT(usuario.id)
+
+    res.json({
+        status:200,
+        usuario,
+        token
+    })
+
+}
+
 module.exports ={
     login,
-    googleSignIn
+    googleSignIn,
+    renovarToken
 };

@@ -4,63 +4,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <meta name="google-signin-client_id" content="469144469872-5k735819tdld9a950ien83rnb7pqhemb.apps.googleusercontent.com">
     <title>Document</title>
 </head>
-<body>
-    <h1>GOOGLE SIG IN</h1>
+<body class="container mt-5">
+
+    <div class="row">
+
+        <div class="col-sm-6">
+            
+            <h1>Google Signin</h1>
+            <hr>
+            <br>
+            <div class="g-signin2 mb-2" data-onsuccess="onSignIn"></div>
+            <a href="#" onclick="signOut();">Sign out</a>
+        </div>
+        <div class="col-sm-6">
+
+            <form action="" id="form">
+                <h1>Login</h1>
+                <hr>
+                <input type="text" class="form-control mb-2" name="correo" placeholder="name" id="correo" required>
+                <input type="password" class="form-control mb-2" name="password" placeholder="password" id="password" required>
+                <button class="btn btn-primary" type="submit">ingresar</button>
+
+
+            </form>
+
+        </div>
+        
+    </div>
     
-   <img src="data:image/jpeg;base64,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" alt="">
-
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-
-    <br>
-    <a href="#" onclick="signOut();">Sign out</a>
 
 
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    <script>
+    <script src="./js/auth.js">
 
-        var url = (window.location.host.includes('localhost'))
-                  ? `http://localhost:8080/api/auth/google`
-                  : `https://restserver--inicial.herokuapp.com/api/auth/google`
-        function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        var id_token = googleUser.getAuthResponse().id_token;
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-            var data = {id_token}
-
-
-           fetch(url,{
-               body: JSON.stringify(data),
-               headers: {'Content-Type': 'application/json'},
-               method:'POST'
-           })
-           .then(response => response.json()).then(data=>{ console.log(data)}).catch(e=>console.log)
-          
-           
-
-      
-          
-
-    
-
-   
-
-}
-
-function signOut() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-          console.log('User signed out.');
-        });
-
-  }
+  
     </script>
 </body>
 </html>

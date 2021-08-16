@@ -3,7 +3,7 @@ const {response , request} = require('express');
 const Usuario  = require('../models/usuarios')
 
 
-
+// valido el JWT en  mi backend
 const validarJwt = async(req = request, res  =response , next) => {
 
     let token = req.header('x-token')
@@ -29,7 +29,6 @@ const validarJwt = async(req = request, res  =response , next) => {
         
         
     }catch(err){
-        console.log(err)
         res.status(401).json({message:`token no valido`})
     }
   
